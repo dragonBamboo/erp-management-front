@@ -1,9 +1,22 @@
 <template>
   <el-container>
     <el-header>
-      <div id="logo">
-        <img src="../assets/title.png">
-      </div>
+      <el-row justify="space-between" gutter="24">
+        <el-col span="8">
+          <div id="logo">
+            <img src="../assets/title.png">
+          </div>
+        </el-col>
+        <el-col span="8">
+          <div class="center">
+            <el-avatar class="my-el-avatar" :size="large" :src="circleUrl"/>
+          </div>
+          <el-text class="login-msg" type="primary">欢迎您，{{ username }}</el-text>
+          <div class="logout">
+            <LogoutDialog/>
+          </div>
+        </el-col>
+      </el-row>
     </el-header>
     <el-main>
       <el-container>
@@ -38,19 +51,19 @@
                 </el-icon>
                 当前库存查询
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="1-3">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 出入库流水账
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="1-4">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 收发存汇总
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="1-5">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
@@ -64,31 +77,31 @@
                 </el-icon>
                 <span class="menu-main">基础设置</span>
               </template>
-              <el-menu-item class="my-el-menu-item" index="/">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 新增仓库
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="2-2">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 新增货品类别
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="2-3">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 新增货品
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="2-4">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 新增供应商
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="2-5">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
@@ -102,31 +115,31 @@
                 </el-icon>
                 <span class="menu-main">入库管理</span>
               </template>
-              <el-menu-item class="my-el-menu-item" index="3-1">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 采购入库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="3-2">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 退料入库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="3-3">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 生产入库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="3-4">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 销售退货入库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="3-5">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
@@ -140,25 +153,25 @@
                 </el-icon>
                 <span class="menu-main">出库管理</span>
               </template>
-              <el-menu-item class="my-el-menu-item" index="4-1">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 采购退货出库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="4-2">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 领料出库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="4-3">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 销售出库单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="4-4">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
@@ -172,43 +185,29 @@
                 </el-icon>
                 <span class="menu-main">库存管理</span>
               </template>
-              <el-menu-item class="my-el-menu-item" index="5-1">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 库存调拨单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="5-2">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 库存盘点单
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="5-3">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 库存调拨记录
               </el-menu-item>
-              <el-menu-item class="my-el-menu-item" index="5-4">
+              <el-menu-item class="my-el-menu-item" index="/home/currentRepertorySearch">
                 <el-icon>
                   <Management/>
                 </el-icon>
                 库存盘点记录
-              </el-menu-item>
-            </el-sub-menu>
-            <el-sub-menu index="/home/relax">
-              <template #title>
-                <el-icon>
-                  <Folder/>
-                </el-icon>
-                <span class="menu-main">放松一下</span>
-              </template>
-              <el-menu-item class="my-el-menu-item" index="/home/relax">
-                <el-icon>
-                  <Management/>
-                </el-icon>
-                放松一下
               </el-menu-item>
             </el-sub-menu>
           </el-menu>
@@ -226,12 +225,17 @@
 
 <script>
 import {Folder, Management} from "@element-plus/icons-vue";
+import LogoutDialog from "@/components/LogoutDialog.vue";
 
+const circleUrlDefault = require('../assets/photo.jpg')
 export default {
     name: 'HomeView',
-    components: {Management, Folder, Location},
+    components: {LogoutDialog, Management, Folder, Location},
     data() {
-        return {}
+        return {
+            username: '',
+            circleUrl: circleUrlDefault,
+        }
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -241,6 +245,9 @@ export default {
             console.log(key, keyPath)
         },
     },
+    created() {
+        this.username = this.$cookies.get('name')
+    }
 }
 </script>
 <style scoped>
@@ -249,17 +256,45 @@ export default {
     float: left;
 }
 
+.my-el-avatar {
+    height: 6vh;
+    width: 6vh;
+}
+
+.center {
+    float: left;
+    padding: 1vh;
+}
+
+.login-msg {
+    float: left;
+    width: 200px;
+    color: #395b64;
+    height: 8vh;
+    border-radius: 10px;
+    line-height: 8vh;
+    font-size: 24px;
+}
+
+.logout {
+    float: right;
+    width: 200px;
+    height: 8vh;
+    border-radius: 10px;
+    line-height: 8vh;
+}
+
 .el-main {
-    padding: 0px;
+    padding: 0;
 }
 
 ul.el-menu.el-menu--vertical.el-menu-vertical-demo {
-    height: 94vh;
-    border: 0px;
+    height: 92vh;
+    border: 0;
 }
 
 header.el-header {
-    height: 70px;
+    height: 8vh;
     background-color: #A5C9CA;
 }
 
@@ -272,16 +307,12 @@ header.el-header {
 }
 
 .menu-main {
-    color: #d9d4d4;
-}
-
-.el-icon {
-    color: #d9d4d4;
+    color: #f5f6f8;
 }
 
 #container-main {
     width: 100%;
     height: 100%;
-    background-color: #b4b2b2;
+    background-color: #f5f6f8;
 }
 </style>

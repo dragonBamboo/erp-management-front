@@ -3,11 +3,9 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
-<!--  <el-row :gutter="20">-->
-<!--    <el-col :span="18" :offset="1">-->
+
       <router-view/>
-<!--    </el-col>-->
-<!--  </el-row>-->
+
 </template>
 
 <style lang="less">

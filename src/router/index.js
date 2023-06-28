@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import LoginView from '@/views/login/LoginView.vue'
+import Vue from 'vue'
 
 const routes = [
     {
@@ -8,8 +9,8 @@ const routes = [
         component: LoginView
     },
     {
-      path: '/',
-      redirect: '/login'
+        path: '/',
+        redirect: '/login'
     },
     {
         path: '/about',
@@ -23,22 +24,22 @@ const routes = [
         path: '/home',
         name: 'home',
         component: () => import('../views/HomeView.vue'),
-        children:[
+        children: [
             {
                 path: '',
                 name: 'goodsList',
-                component:()=>import('../views/report_statistics/GoodsListView.vue')
+                component: () => import('../views/report_statistics/GoodsListView.vue')
             },
             {
                 path: 'currentRepertorySearch',
                 name: 'CurrentRepertorySearch',
-                component:()=>import('../views/report_statistics/CurrentRepertorySearch.vue')
+                component: () => import('../views/report_statistics/CurrentRepertorySearch.vue')
             },
             {
-                path: 'relax',
-                name:'RelaxView',
-                component:()=>import('../views/RelaxView.vue')
-            }
+                path: 'addGoods',
+                name: 'AddGoodsView',
+                component: () => import('../views/basic_setting/AddGoodsView.vue')
+            },
         ]
     },
 ]
@@ -46,6 +47,15 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)jwt_token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+    if (!token && to.path !== '/login') {
+        next('/')
+    } else {
+        next()
+    }
 })
 
 export default router

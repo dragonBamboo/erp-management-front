@@ -4,10 +4,17 @@
       <el-form :model="formLogin">
         <div style="height:30px"></div>
         <el-form-item label="用户名：">
-          <el-input v-model="formLogin.username"/>
+          <el-input
+              v-model="formLogin.username"
+              placeholder="请输入用户名"
+          />
         </el-form-item>
         <el-form-item label="密&nbsp;&nbsp;&nbsp;&nbsp;码：">
-          <el-input v-model="formLogin.password"/>
+          <el-input
+              v-model="formLogin.password"
+              type="password"
+              placeholder="请输入密码"
+          />
         </el-form-item>
         <el-form-item style="text-align: center;">
           <el-button class="btn" type="primary" @click="onLogin">登录</el-button>
@@ -27,10 +34,18 @@
           <el-input v-model="formDialog.username" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="密码" :label-width="formLabelWidth">
-          <el-input v-model="formDialog.password" autocomplete="off"/>
+          <el-input
+              v-model="formDialog.password"
+              autocomplete="off"
+              type="password"
+          />
         </el-form-item>
         <el-form-item label="确认密码" :label-width="formLabelWidth">
-          <el-input v-model="formDialog.repassword" autocomplete="off"/>
+          <el-input
+              v-model="formDialog.repassword"
+              autocomplete="off"
+              type="password"
+          />
         </el-form-item>
         <el-form-item label="手机号" :label-width="formLabelWidth">
           <el-input v-model="formDialog.phone" autocomplete="off"/>
@@ -62,12 +77,12 @@ const formLogin = {
     password: '',
 }
 const formDialog = {
-    name: 'test',
-    username: 'test',
-    password: 'test',
-    repassword: 'test',
-    phone: '18834162690',
-    email: 'test@qq.com',
+    name: '',
+    username: '',
+    password: '',
+    repassword: '',
+    phone: '',
+    email: '',
 }
 const data = {
     code: '',
@@ -88,19 +103,16 @@ export default {
     },
     methods: {
         onLogin() {
-            // console.log('login!')
-            // if (this.formLogin.name==='admin'&& this.formLogin.password==='111111'){
-            //     router.push('/home')
-            // }
-
             axios.post('/api/lc/login', this.formLogin)
                 .then((response) => {
                     if (response.data.code === 200) {
                         console.log(response.data.data.token)
                         const token = response.data.data.token
+                        const name = response.data.data.name
                         // Token 有效期为 1 天
                         const expires = 60 * 60 * 24;
                         this.$cookies.set('jwt_token', token, expires);
+                        this.$cookies.set('name', name, expires);
                         router.push('/home')
                     } else {
                         ElMessage.error('用户名或密码错误，请重新输入！')
@@ -109,7 +121,7 @@ export default {
         },
         onRegister() {
             console.log('register!')
-            // this.formDialog = {}
+            this.formDialog = {}
             this.dialogFormVisible = true
         },
         registerSubmit(e) {
@@ -186,7 +198,6 @@ export default {
     margin: auto;
     width: 40%;
     color: ghostwhite;
-    /*#a0cfff*/
 }
 
 .el-button {

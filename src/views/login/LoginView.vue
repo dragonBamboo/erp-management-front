@@ -36,13 +36,13 @@ export default {
 }
 
 #app {
-    height: 98vh;
-    background: url('@/assets/bg.jpg')
+    height: 100vh;
+    background: url('@/assets/bg.jpg');
+    overflow: hidden;
 }
 
 .logo {
     width: 650px;
-    /* float: right; */
     padding-top: 150px;
 }
 
