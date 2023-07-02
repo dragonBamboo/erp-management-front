@@ -294,7 +294,7 @@ export default {
             }
         },
         async fetchData(page = 1, limit = 10, param) {
-            const {data: res} = await axios.get(`/api/goods/${page}/${limit}`, {params: param})
+            const {data: res} = await axios.get(`/api/goods/${page}/${limit}`, {params: param});
             this.goodsData = res.data.records
             this.allTotal = res.data.total
 
@@ -311,7 +311,6 @@ export default {
         },
         // 编辑
         async handleEdit(index, row) {
-            // console.log(index, row)
             const id = row.id
             const {data: res} = await axios.get(`/api/goods/get/${id}`)
             this.goods = res.data
@@ -335,7 +334,6 @@ export default {
             this.editDialog = false
         },
         async handleDelete(index, row) {
-            console.log(index, row)
             const id = row.id
             const {data: res} = await axios.get(`/api/goods/get/${id}`)
             this.goods = res.data
@@ -363,7 +361,11 @@ export default {
         },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
-            this.fetchData(this.currentPage, 10, {});
+            const param = {
+                keyword: ''
+            }
+            param.keyword = this.searchValue
+            this.fetchData(this.currentPage, 10, param);
         },
         init() {
             const chart = this.$echarts.init(document.getElementById('chart'))
@@ -381,6 +383,10 @@ export default {
 <style scoped>
 #container {
     color: #c2baba;
+}
+.el-row {
+    margin: 0!important;
+    padding:0!important;
 }
 
 #container-header {
@@ -434,7 +440,7 @@ export default {
     transition: box-shadow 0.2s;
     /*边框颜色*/
     border: 1px solid #e8e8e8;
-    height: 610px;
+    height: 580px;
     position: relative;
     text-align: center;
 }
@@ -482,7 +488,7 @@ export default {
     justify-content: center;
     height: 100%;
     font-size: 100px;
-    line-height: 240px;
+    line-height: 250px;
     color: #395b64;
 }
 
@@ -496,7 +502,7 @@ export default {
     transition: box-shadow 0.2s;
     /*边框颜色*/
     border: 1px solid #e8e8e8;
-    height: 300px;
+    height: 250px;
     position: relative;
     text-align: center;
     box-sizing: border-box;

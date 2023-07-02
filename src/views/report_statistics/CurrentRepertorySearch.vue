@@ -14,18 +14,17 @@
           <!-- 搜索框 -->
           <el-header class="my-search-header">
             <el-row :gutter="20">
-              <el-col :span="5">
+              <el-col :span="4">
                 <el-text class="mx-1" size="large">单据编号：</el-text>
                 <el-input v-model="selectId" class="my-input-limit-width" placeholder="" clearable/>
               </el-col>
-              <el-col :span="5">
+              <el-col :span="4">
                 <el-text class="mx-1" size="large">商品信息：</el-text>
                 <el-input v-model="selectMessage" class="my-input-limit-width" placeholder="" clearable/>
               </el-col>
-              <el-col :span="8">
-                <el-text class="mx-1" size="large">单据日期：</el-text>
+              <el-col :span="10">
+                <el-text class="mx-1" size="">单据日期：</el-text>
                 <el-date-picker
-                    disabled
                     v-model="dateRange"
                     type="daterange"
                     range-separator="To"
@@ -36,13 +35,13 @@
                 />
               </el-col>
               <el-col :span="1">
-                <el-button style="height: 100%" :icon="Search" @click="searchInvoke" round>查询</el-button>
-              </el-col>
-              <el-col :span="2">
-                <el-button style="height: 100%;" :icon="Refresh" @click="reset" round>重置</el-button>
+                <el-button style="" :icon="Search" @click="searchInvoke" round>查询</el-button>
               </el-col>
               <el-col :span="3">
-                <el-button style="height: 100%;" :icon="Refresh" @click="addCustomer" round>添加</el-button>
+                <el-button style="" :icon="Refresh" @click="reset" round>重置</el-button>
+              </el-col>
+              <el-col :span="2">
+                <el-button style="" :icon="Refresh" @click="addCustomer" round>添加</el-button>
               </el-col>
             </el-row>
 
@@ -55,10 +54,10 @@
                 style='width: 100%'
                 :row-class-name='tableData'
             >
-              <el-table-column prop='name' label='客户名称' width='150'/>
-              <el-table-column prop='receiptNumber' label='单据编号' width='190'/>
+              <el-table-column prop='name' label='客户名称' width='100'/>
+              <el-table-column prop='receiptNumber' label='单据编号' width='150'/>
               <el-table-column prop='commodityInformation' label='商品信息' width=''/>
-              <el-table-column prop='' label='单据日期' width='250'>
+              <el-table-column prop='' label='单据日期' width='200'>
                 <template #default="scope">
                   <div style="display: flex; align-items: center;justify-content: left;">
                     <el-icon>
@@ -68,9 +67,9 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop='operator' label='操作员' width="150"/>
-              <el-table-column prop='totalAmount' label='金额合计' width='150'/>
-              <el-table-column prop='state' label='状态' width="150"/>
+              <el-table-column prop='operator' label='操作员' width="100"/>
+              <el-table-column prop='totalAmount' label='金额合计' width='130'/>
+              <el-table-column prop='state' label='状态' width="100"/>
               <el-table-column fixed="right" label="操作" width='180'>
                 <template #default="scope">
                   <el-button class="btn-padding" size="small" @click="handleEdit(scope.$index, scope.row)"
@@ -225,7 +224,7 @@ export default {
 
             // 日期数据
             dateRange: '',
-            dateSize: 'large',
+            dateSize: '',
             oldTime: '',
             newTime: '',
 
@@ -256,7 +255,7 @@ export default {
         },
         // 格式日期
         formatDate(date) {
-            return date.toLocaleString('zh-CN', {
+            return  date.toLocaleString('zh-CN', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
@@ -268,9 +267,7 @@ export default {
         },
         // 数据初始化
         async fetchData(page = 1, limit = 10, param) {
-            console.log(param)
             const {data: res} = await axios.get(`/api/customer/${page}/${limit}`, {params: param})
-            console.log(res)
             this.tableData = res.data.records
             this.allTotal = res.data.total
         },
@@ -310,7 +307,10 @@ export default {
         },
         // 分页查询管理
         handlePageChange(currentPage) {
-            console.log(currentPage)
+            const param = {
+                keyword: ''
+            }
+            param.keyword = this.searchValue
             this.currentPage = currentPage;
             this.fetchData(this.currentPage, 10, {});
         },
@@ -327,7 +327,6 @@ export default {
         },
         // 删除操作
         async handleDelete(index, row) {
-            // console.log(index, row)
             const id = row.id
             const {data: res} = await axios.get(`/api/customer/get/${id}`)
             this.customer = res.data
@@ -372,15 +371,19 @@ export default {
     padding: 0 !important;
     margin: 0 !important;
 }
-
+.el-col {
+    padding: 0 !important;
+    margin: 0 !important;
+}
 /deep/ .el-header {
     padding: 0 !important;
-    height: auto;
+    margin: 0 !important;
+    height: 50px;
 }
 
 .title {
     padding-left: 20px;
-    height: 40px;
+    height: 50px;
     line-height: 40px;
     font-size: large;
     color: #717175;
@@ -402,8 +405,8 @@ export default {
 }
 
 .my-input-limit-width {
-    width: 200px;
-    height: 100%;
+    width: 100px;
+    /*height: 100%;*/
 }
 
 .footer-parent {
@@ -426,7 +429,7 @@ export default {
 }
 
 .my-content-container {
-    height: 800px !important;
+    height: 600px !important;
 }
 
 .btn-padding {
